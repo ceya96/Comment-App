@@ -1,0 +1,112 @@
+*{
+    box-sizing: border-box;
+    padding:0;
+    margin: 0;
+}
+h1{
+    font-family: sans-serif;
+    margin-top: 5px;
+    text-align: center;
+}
+.header{
+    margin-top: 15px;
+    margin-bottom: 40px;
+    word-wrap: break-word;
+}
+h2{
+    font-family: sans-serif;
+    text-align: center;
+    word-wrap: break-word;
+}
+body{
+    font-family: sans-serif;
+    background: linear-gradient(320deg, #eb92be, #ffef78,#63c9b4);
+    height: 100vh;
+}
+.container{
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 80px;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 5px;
+    box-sizing: border-box;
+    border-radius: 16px;
+}
+
+input{
+    width: 100%;
+    padding: 12px 20px;
+    background: white;
+    border: none;
+    border-radius: 16px;
+}
+textarea{
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 16px;
+    border: 1px solid black;
+    border-radius: 16px;
+}
+.comment_ifr, .tox-editor-container, .comment-box{
+    background: rgba(255, 255, 255, 0.5);
+}
+::placeholder {
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif;;
+    font-size: 15.5px;
+    line-height: 1.4;
+}
+.button {
+    background: #42bda4;
+    color: white;
+    padding: 15px 40px;
+    margin-top: 20px;
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 45px;
+    border-radius: 16px;
+    border: none;
+    font-size: 17px;
+    font-family: sans-serif;
+}
+.button:hover {
+    background-color: #2e8674;
+}
+
+.button:active {
+    background-color:  #2e8674;
+    box-shadow: 0 2px #2e8674;
+    transform: translateY(4px);
+}
+.comment-box{
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    background: white;
+    border-radius: 16px;
+    word-wrap: break-word;
+    padding: 10px;
+}
+
+.container-form{
+    width: 80%;
+    margin: auto;
+    background: rgba(255, 255, 255, 0);
+    padding: 5px;
+}
+
+@media screen and (max-width: 600px){
+    .button{
+
+        max-width: 100%;
+        font-size: 8px;
+        word-wrap: break-word;
+    }
+
+}    
