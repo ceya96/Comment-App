@@ -1,21 +1,32 @@
 <?php
 
-class Comment{
-    public $name;
-    public $email;
-    public $text;
+class Comment
+{
+    private $database;
 
-    public function __construct($newname, $newemail, $newtext)
+    public function __construct()
     {
+        $this->database = new Database();
+    }
+    public function set($newname, $newemail, $newtext)
+    {
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         $this->name = $newname;
         $this->email = $newemail;
         $this->text = $newtext;
-        $sql = new Connection()
-        $stmt = $sql->prepare("INSERT INTO kommentare (name, Email, kommentare) VALUES (?,?,?)");
-        //"s" means the database expects a string
-        $stmt->bind_param('sss', $this->name, $this->email, $this->text);
-        $stmt->execute();
 
-        header("Location: index.php");
+        $this->database->insert($newname, $newemail, $newtext);
+
+    }
+    public function get()
+    {   $result = $this->database->select();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo $row["name"] . " (" . $row["Email"] . ")" . ": " . $row["kommentare"] . "<br>";
+            }
+        } else {
+            echo "Keine Kommentare verfügbar";
+        }
+        ($this->database->connection)->close();
     }
 }

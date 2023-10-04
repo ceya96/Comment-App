@@ -14,18 +14,18 @@
             Hinterlasse eine Nachricht!
         </h2>
         <div class="container-form">
-            <form id="input" name="comments" action=insert.php  method= "post">
+            <form method= "POST" action="">
                 <label for="name"></label>
                 <input type="text" id="name" name="username" required placeholder=" Dein Name">
                 <br>
                 <br>
                 <label for="email"></label>
-                <input type="email" id="email" name="email" required placeholder="Deine E-Mail">
+                <input type="email" id="email" name="email"  required placeholder="Deine E-Mail">
                 <br>
                 <br>
                 <label for="comment"></label>
                 <textarea id="comment" name="comment" rows="4" cols="50" placeholder="Deine Nachricht"></textarea>
-                <button class="button" id="btn" type="submit">
+                <button class="button" name="submit" id="btn" type="submit">
                     senden
                 </button>
                 <h2>
@@ -34,20 +34,23 @@
                 <div class="comment-box">
                     <span>
                         <?php
-                        $conn = new mysqli("localhost", "root", "", "kommentare");
-                        $sql = $conn->prepare("SELECT Email, name, kommentare FROM kommentare ORDER BY erstellt_am DESC ");
-                        $sql->execute();
-                        $result = $sql->get_result();
-                        if ($result->num_rows > 0) {
-                            while($row = $result->fetch_assoc()) {
-                                echo $row["name"]. " (". $row["Email"]. ")" . ": " . $row["kommentare"]. "<br>";
-                            }
-                        } else {
-                            echo "Keine Kommentare verfügbar";
+                        require 'Database.php';
+                        require 'Comment.php';
+                        $connection = new Database();
+                        $comment = new Comment();
+
+                        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["submit"])) {
+                            $newtext = $_POST["comment"];
+                            $newname = $_POST["username"];
+                            $newemail = $_POST["email"];
+
+                            $comment->set($newname, $newemail, $newtext);
+                            header("Location: index.php");
                         }
-                        $conn->close();
+
+                        $comment->get();
                         ?>
-                </span>
+                    </span>
                 </div>
             </form>
         </div>
