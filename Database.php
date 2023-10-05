@@ -15,7 +15,7 @@ class Database
 
     public function insert($newname, $newemail, $newtext)
     {
-        $sql = $this->connection->prepare("INSERT INTO kommentare (name, Email, kommentare) VALUES (?,?,?)");
+        $sql = $this->connection->prepare("INSERT INTO kommentare (name, email, text) VALUES (?,?,?)");
         $sql->bind_param('sss',$newname, $newemail, $newtext);
         $sql->execute();
         ($this->connection)->close();
@@ -23,7 +23,7 @@ class Database
     }
     public function select()
     {
-        $sql = $this->connection->prepare("SELECT Email, name, kommentare FROM kommentare ORDER BY erstellt_am DESC ");
+        $sql = $this->connection->prepare("SELECT email, name, text, id FROM kommentare ORDER BY tstamp DESC ");
         $sql->execute();
         $result = $sql->get_result();
         return  $result;
