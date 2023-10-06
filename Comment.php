@@ -26,7 +26,7 @@ class Comment
         {
             while ($row = $result->fetch_assoc())
             {
-                echo "<div class='author-container'>" ."<span class='author'>" . $row["name"] . "</span>" . "<span class='author-id'>". " (" . $row["id"] . ")"."</span>". "<span class='author-mail'>". " (" . $row["email"] . ")"."</span>"."</div>" . $row["text"] . "<a href='answers.php'>Antworten</a>" . "<br>";
+                echo "<div class='author-container'>" ."<span class='author'>" . $row["name"] . "</span>" . "<span class='author-id'>". " (" . $row["id"] . ")"."</span>". "<span class='author-mail'>". " (" . $row["email"] . ")"."</span>"."</div>" . $row["text"] . "<a href='#'onclick='iframeshow()'>Antworten</a>" . "<br>";
                 //Todo vsprintf recherchieren
                 /*echo vsprintf('<br><h1 class="author">%s</h1><br>%s', [
                    'Yasin',
