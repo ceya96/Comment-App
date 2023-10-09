@@ -3,6 +3,9 @@
     padding:0;
     margin: 0;
 }
+button{
+    all:unset
+}
 h1{
     font-family: sans-serif;
     margin-top: 5px;
@@ -14,11 +17,8 @@ h1{
     word-wrap: break-word;
     padding: 0 10px;
 }
-br{
-    height: 0;
-}
 p{
-    padding: 5px 7px;
+    padding: 4px 7px;
 
 }
 h2{
@@ -32,7 +32,7 @@ body{
     position: relative;
     font-family: sans-serif;
     background: linear-gradient(320deg, #eb92be, #ffef78,#63c9b4);
-    height: 100vh;
+    height: 200vh;
 }
 .blur-body{
     width: 100%;
@@ -80,6 +80,7 @@ textarea{
     background: #42bda4;
     color: white;
     padding: 15px 40px;
+    transition: 0.5s;
     cursor: pointer;
     display: block;
     border-radius: 16px;
@@ -118,21 +119,21 @@ textarea{
 .author-mail, .author-id{
     margin-left: 4px;
 }
-a:hover{
+.comment-box button:hover{
     background-color: lightgray;
-    border-radius: 16px;
-
 }
-.comment-box a {
+.comment-box button {
     display: block;
     color: black;
+    background: white;
     cursor: pointer;
     text-decoration: none;
     font-weight: 500;
     font-size: 13px;
     padding: 5px 10px;
-    margin-top: 20px;
+    margin-top: 15px;
     float: right;
+    border-radius: 16px;
 }
 .container-form{
     width: 80%;
@@ -151,8 +152,8 @@ iframe{
     border-radius: 16px;
 
 }
-#iframe-hidden{
-    visibility: hidden ;
+#iframe{
+
 }
 #exit{
     font-size: 20px;

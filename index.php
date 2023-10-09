@@ -54,10 +54,6 @@
             </form>
         </div>
     </div>
-    <div id="iframe-hidden">
-        <iframe src="answers.php">
-        </iframe>
-    </div>
     <script src="main.js"></script>
 </body>
 

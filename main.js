@@ -8,6 +8,7 @@ tinymce.init({
 
 });
 
+/*enter submit*/
 let input = document.getElementById("input");
 input.addEventListener("keypress", enter)
 
@@ -17,44 +18,33 @@ function enter(senden) {
         document.getElementById("btn").click();
     }
 }
-
-function iframeshow()
+function openAnswer(btn)
 {
-    let iframe = document.getElementById("iframe-hidden");
-    let exitbtn = document.getElementById('exit');
+    /*create iframe and set id as query string*/
+    let id = btn.dataset.id;
+    let popup = document.createElement('IFRAME');
+    popup.setAttribute('id','iframe');
+    popup.src = `answers.php?pid=${id}`;
+    document.body.appendChild(popup);
+    /*container blur*/
     let container = document.getElementById('containerid');
-
-    iframe.style.visibility = 'hidden';
-    exitbtn.style.visibility = 'hidden';
     container.style.filter = 'blur(5px)'
     container.style.pointerEvents = 'none';
-    if (iframe.style.visibility === 'hidden' && exitbtn.style.visibility === 'hidden' )
-    {
-        iframe.style.visibility = 'visible';
-        exitbtn.style.visibility = 'visible';
-    }
+    /*show the exit-button*/
+    let exitbtn = document.getElementById('exit');
+    exitbtn.style.visibility = 'visible';
 }
 
 let exitbtn = document.getElementById('exit');
-exitbtn.addEventListener('click', iframeclose)
-function iframeclose()
+exitbtn.addEventListener('click', closeanswer)
+function closeanswer()
 {
-    document.getElementById("iframe-hidden").style.visibility = 'hidden';
-    document.getElementById("exit").style.visibility = 'hidden';
+    // ToDo: Logik ändern remove statt hidden
+    let popup = document.getElementById('iframe');
+    popup.remove();
     document.getElementById('containerid').style.filter = 'none';
     document.getElementById('containerid').style.pointerEvents = 'auto';
+    let exitbtn = document.getElementById('exit');
+    exitbtn.style.visibility = 'hidden';
 }
-
-/*
-Query String for Parent ID (pid) example*/
-
-/*let myIframe = document.getElementById("myIframe");
-let url_string = "https://ads.mrvirk.com/";
-let width = "728";
-let height = "90";
-let geo = "uk";
-
-let adsURL = url_string+"?geo="+geo+"&size="+width+"x"+height;
-console.log(adsURL);
-myIframe.src = adsURL;*/
 
