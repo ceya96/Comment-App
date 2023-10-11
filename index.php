@@ -48,6 +48,7 @@
                             header("Location: index.php");
                         }
                         $comment->get();
+
                         ?>
                     </span>
                 </div>

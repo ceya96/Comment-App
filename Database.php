@@ -15,11 +15,12 @@ class Database
 
     public function insert($newname, $newemail, $newtext)
     {
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         $sql = $this->connection->prepare("INSERT INTO kommentare (name, email, text) VALUES (?,?,?)");
         $sql->bind_param('sss', $newname, $newemail, $newtext);
         $sql->execute();
 
-        if (isset($_REQUEST['pid']))
+        if (isset($_REQUEST['pid'])) //REQUEST da POST keine pid mitschickt sondern über REQUEST in Query-String
         {
             $objStatement = $this->connection->prepare('SELECT MAX(id) FROM kommentare');
             $objStatement->execute();
@@ -28,7 +29,7 @@ class Database
             $arrResult = $objResult->fetch_all();
 
             // Nur der aller erste Wert aus der ersten Reihe
-            $current_id = reset($arrResult)[0] ?? 0;
+            $current_id = reset($arrResult)[0] ?? 0; //wenn reset($arrResult)[0] nicht exisitiert ist es -> 0
 
             $parent_id = (int) $_GET['pid'];
             $sql2 = $this->connection->prepare("UPDATE kommentare SET pid = $parent_id WHERE id = $current_id");
@@ -37,10 +38,9 @@ class Database
 
         ($this->connection)->close();
     }
-
     public function select()
     {
-        $sql = $this->connection->prepare("SELECT email, name, text, id FROM kommentare ORDER BY tstamp DESC ");
+        $sql = $this->connection->prepare("SELECT email, name, text, id, pid FROM kommentare ORDER BY tstamp DESC ");
         $sql->execute();
         $result = $sql->get_result();
         return $result;

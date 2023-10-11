@@ -39,12 +39,13 @@ let exitbtn = document.getElementById('exit');
 exitbtn.addEventListener('click', closeanswer)
 function closeanswer()
 {
-    // ToDo: Logik ändern remove statt hidden
     let popup = document.getElementById('iframe');
     popup.remove();
     document.getElementById('containerid').style.filter = 'none';
     document.getElementById('containerid').style.pointerEvents = 'auto';
     let exitbtn = document.getElementById('exit');
     exitbtn.style.visibility = 'hidden';
+    window.location.reload();
+
 }
 
