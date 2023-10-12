@@ -6,16 +6,17 @@ class Database
 
     public function __construct()
     {
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         $this->connection = new mysqli("localhost", "root", "", "kommentare");
 
-        if ($this->connection->connect_error) {
+        if ($this->connection->connect_error)
+        {
             exit();
         }
     }
 
     public function insert($newname, $newemail, $newtext)
     {
-        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         $sql = $this->connection->prepare("INSERT INTO kommentare (name, email, text) VALUES (?,?,?)");
         $sql->bind_param('sss', $newname, $newemail, $newtext);
         $sql->execute();

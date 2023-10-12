@@ -1,17 +1,6 @@
-tinymce.init({
-    selector: "#commen",
-    plugins: "emoticons autoresize importcss",
-    toolbar: "emoticons",
-    toolbar_location: "bottom",
-    menubar: false,
-    statusbar: false,
-
-});
-
 /*enter submit*/
 let input = document.getElementById("input");
 input.addEventListener("keypress", enter)
-
 function enter(senden) {
     if (senden.key === "Enter") {
         senden.preventDefault();
@@ -34,7 +23,7 @@ function openAnswer(btn)
     let exitbtn = document.getElementById('exit');
     exitbtn.style.visibility = 'visible';
 }
-
+/*close iframe*/
 let exitbtn = document.getElementById('exit');
 exitbtn.addEventListener('click', closeanswer)
 function closeanswer()
