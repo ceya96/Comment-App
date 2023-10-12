@@ -21,7 +21,7 @@
             <input type="email" id="email" name="email"  required placeholder="Deine E-Mail">
             <label for="comment"></label>
             <textarea id="comment" name="comment" rows="5.5"  placeholder="Deine Antwort" required></textarea>
-            <button class="button" name="submit" id="answerbtn" type="submit" ">
+            <button class="button" name="submit" id="answerbtn" type="submit">
                 senden
             </button>
         </form>
