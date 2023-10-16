@@ -2,16 +2,30 @@
 
 class Comment
 {
-    private $database;
+    private Database $database;
+    private int $parentId = 0;
 
     public function __construct()
     {
         $this->database = new Database();
     }
 
-    public function set($newname, $newemail, $newtext,)
+    /**
+     * Set the parent comment by id.
+     *
+     * @return void
+     */
+    public function setParent(int $parentId): void
     {
-        $this->database->insert($newname, $newemail, $newtext);
+        $this->parentId = $parentId;
+    }
+
+    public function save($newname, $newemail, $newtext, $parentId)
+    {
+
+        //$this->parentId
+
+        $this->database->insert($newname, $newemail, $newtext, $parentId);
     }
 
     public function get()
@@ -42,12 +56,14 @@ class Comment
                     }
                 }
             }
+            $answersSorted = array_reverse($answers);
             while ($row = $result->fetch_assoc())
             {
                 if ($row["pid"] === 0)
                 {
-                    echo "<div class='author-container'>" . "<span class='author'>" . $row["name"] . "<span class='author-mail'>" . " (" . $row["email"] . ")" . "</span>" . "</div>" . "<p>" . $row["text"] . "</p>";
-                    foreach ($answers as $key_answer => $value_answer)
+                    //Todo: generate the HTML inside the HTML not in php | pass the comments via Array containers
+                    echo "<div class='author-container'>" . "<span class='author'>" . $row["name"] . "<span class='author-mail'>" . " (" . $row["email"] . ")" . "</span>" . "<span class='author-tstamp'>" . $row["tstamp"] . "</span>". "</div>" . "<p>" . $row["text"] . "</p>";
+                    foreach ($answersSorted as $key_answer => $value_answer)
                     {
                         foreach ($value_answer as $datakey_answer => $data_answer)
                         {
@@ -55,7 +71,7 @@ class Comment
                             {
                                 if($data_answer == $row["id"] )
                                 {
-                                    echo "<div class='container-answers'>"."<div class='author-container-answers'>" . "<span class='author_answers'>" . $value_answer[1] . "</span>" . "<span class='author-mail-answers'>" . " (" . $value_answer[0] . ")" . "</div>" . "<p>" . $value_answer[2] . "</p>". "</div>";
+                                    echo "<div class='container-answers'>"."<span class='response-arrow'>". "&#8627;". "</span>"."<div class='author-container-answers'>" . "<span class='author_answers'>" . $value_answer[1] . "</span>" . "<span class='author-mail-answers'>" . " (" . $value_answer[0] . ")" . "</div>" . "<p>" . $value_answer[2] . "</p>". "</div>";
                                 }
                             }
                         }
@@ -63,8 +79,8 @@ class Comment
                     echo "<button type='button' class='answer-btn' data-id= {$row['id']} onclick='openAnswer(this)'>Antworten</button>";
                 }
             }
-            //TEST the Arrays
-           /* echo "<br>";
+            //TEST the arrays
+            /* echo "<br>";
             echo "<br>";
             echo "Kommentare Array:"."<br>";
             print_r($comments);

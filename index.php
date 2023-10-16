@@ -1,3 +1,51 @@
+<?php
+                        require 'Database.php';
+                        require 'Comment.php';
+                        require 'CommentForm.php';
+                        $comment = new Comment();
+                        $commentForm = new CommentForm('submitForm');
+                        //$comment = new Comment();
+
+
+
+
+                       /* // Kommentar-Formular Instanz erzeugen
+                        $form = new CommentForm();
+
+                        // Formularfelder zur Verfügugn stellen
+                        $form->setFormFields([
+                                [
+                                        'name'      => 'feldname',
+                                        'label'     => 'Name',
+                                        'type'      => 'text',
+                                        'require'   => true
+                                ],
+                                [
+                                        'name'      => 'feldname2',
+                                        'label'     => 'Name 2',
+                                        'type'      => 'text',
+                                        'require'   => true
+                                ]
+                        ]);
+
+                        // Durch weitere Logic ist es möglich Felder dynamisch hinzuzufügen
+                        if($logic === 'Kunde möchte bei Auswahl von Checkbox A, ein weiteres Feld abfragen')
+                        {
+                            $form->setFormFields([
+                                [
+                                    'name'      => 'weiteresfeld',
+                                    'label'     => 'Name',
+                                    'type'      => 'text',
+                                    'require'   => true
+                                ]
+                            ]);
+                        }
+
+                        // Formular generieren -> HTML Ausgabe
+                        echo $form->generateForm();*/
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +61,8 @@
             Hinterlasse eine Nachricht!
         </h2>
         <div class="container-form">
-            <form id="input" method= "POST" action="">
+            <form id="input" name="myform" method= "POST" action="">
+                <input type="hidden" name="formID" value="MEIN_FORM" />
                 <label for="name"></label>
                 <input type="text" id="name" name="username" required placeholder=" Dein Name">
                 <br>
@@ -24,7 +73,7 @@
                 <br>
                 <label for="comment"></label>
                 <textarea id="comment" name="comment" rows="5.5"  placeholder="Deine Nachricht"></textarea>
-                <button class="button" name="submit" id="btn" type="submit">
+                <button class="button" name="submitForm" id="btn" type="submit">
                     senden
                 </button>
                 <h2>
@@ -33,18 +82,6 @@
                 <div class="comment-box">
                     <span>
                         <?php
-                        require 'Database.php';
-                        require 'Comment.php';
-                        $comment = new Comment();
-
-                        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["submit"])) {
-                            $newtext = $_POST["comment"];
-                            $newname = $_POST["username"];
-                            $newemail = $_POST["email"];
-
-                            $comment->set($newname, $newemail, $newtext);
-                            header("Location: index.php");
-                        }
                         $comment->get();
                         ?>
                     </span>

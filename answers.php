@@ -1,3 +1,10 @@
+<?php
+require 'Database.php';
+require 'Comment.php';
+require 'CommentForm.php';
+$commentForm = new CommentForm('submitAnswer', (int) $_REQUEST['pid']);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,26 +28,10 @@
             <input type="email" id="email" name="email"  required placeholder="Deine E-Mail">
             <label for="comment"></label>
             <textarea id="comment" name="comment" rows="5.5"  placeholder="Deine Antwort" required></textarea>
-            <button class="button" name="submit" id="answerbtn" type="submit">
+            <button class="button" name="submitAnswer" id="answerbtn" type="submit">
                 senden
             </button>
         </form>
-        <span>
-             <?php
-             require 'Database.php';
-             require 'Comment.php';
-             $connection = new Database();
-             $comment = new Comment();
-
-             if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["submit"])) {
-                 $newtext = $_POST["comment"];
-                 $newname = $_POST["username"];
-                 $newemail = $_POST["email"];
-
-                 $comment->set($newname, $newemail, $newtext);
-             }
-             ?>
-        </span>
     </div>
 </div>
 <script>
