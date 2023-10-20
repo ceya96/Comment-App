@@ -8,17 +8,16 @@ class Database
     {
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         $this->connection = new mysqli("localhost", "root", "", "kommentare");
-        //Todo: throw error message
         if ($this->connection->connect_error)
         {
+            throw new Exception('Es konnte keine Verbindung hergestellt werden');
             exit();
         }
     }
-    //Todo: refactor the function insert that it expects the table and an array
-    public function insert($newname, $newemail, $newtext, $parentId)
+    public function insert($name, $email, $text, $parentId)
     {
         $sql = $this->connection->prepare("INSERT INTO kommentare (name, email, text, pid) VALUES (?,?,?,?)");
-        $sql->bind_param('sssi', $newname, $newemail, $newtext, $parentId);
+        $sql->bind_param('sssi', $name, $email, $text, $parentId);
         $sql->execute();
 
         ($this->connection)->close();

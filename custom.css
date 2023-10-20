@@ -17,6 +17,7 @@ h1{
     margin-bottom: 40px;
     word-wrap: break-word;
     padding: 0 10px;
+    /*animation: rotate 5s normal linear infinite;*/
 }
 h2{
     font-family: sans-serif;
@@ -67,6 +68,7 @@ textarea{
     line-height: 1.4;
 }
 .button{
+    transition: 0.2s;
     margin: 30px auto 45px auto;
     background: #42bda4;
     color: white;
@@ -77,6 +79,24 @@ textarea{
     border: none;
     font-size: 17px;
     font-family: sans-serif;
+    animation: rotate 5s normal linear;
+}
+@keyframes rotate {
+    0% {
+        transform:rotateZ(0deg);
+    }
+    25%{
+        transform:rotateZ(90deg);
+    }
+    50% {
+        transform:rotateZ(180deg);
+    }
+    75% {
+        transform:rotateZ(270deg);
+    }
+    100% {
+        transform:rotateZ(360deg);
+    }
 }
 .button:hover {
     background-color: #2e8674;
@@ -138,10 +158,7 @@ textarea{
 .author-mail-answers, .author-id-answers{
     margin-left: 4px;
 }
-.comment-box button:hover{
-    background-color: lightgray;
-}
-.comment-box button {
+.answer-btn{
     display: block;
     color: black;
     background: white;
@@ -153,6 +170,25 @@ textarea{
     margin-top: 5px;
     float: right;
     border-radius: 16px;
+
+}
+.delete-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    right: 0;
+    border: solid black 1px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    visibility: hidden;
+}
+.comment-box button:hover{
+    background-color: lightgray;
 }
 .container-form{
     width: 80%;
@@ -171,6 +207,9 @@ iframe{
     border-radius: 16px;
 }
 #exit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: fixed;
     font-size: 20px;
     font-weight: bold;
@@ -179,9 +218,13 @@ iframe{
     right: 20.6%;
     top: 23.5%;
     background-color: inherit;
+    border: solid black 1px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
 }
 #exit:hover{
-    font-size: 25px;
+    transform: scale(1.2);
 }
 @media screen and (max-width: 700px){
 

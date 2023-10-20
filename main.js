@@ -35,6 +35,14 @@ function closeanswer()
     let exitbtn = document.getElementById('exit');
     exitbtn.style.visibility = 'hidden';
     window.location.reload();
+}
+function showDelete(btn){
+    let commentDeleteBtn = document.getElementById("deleteBtn");
+    commentDeleteBtn.style.visibility = 'visible';
+}
 
+function hideDelete(btn){
+    let commentDeleteBtn = document.getElementById("deleteBtn");
+    commentDeleteBtn.style.visibility = 'hidden';
 }
 

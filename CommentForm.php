@@ -8,11 +8,6 @@ class CommentForm
         $this->handleSubmit($submitName, $parentId);
     }
 
-    /**
-     * Handle form submit and create comment.
-     *
-     * @return void
-     */
     private function handleSubmit($submitName, int $parentId): void
     {
         if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["$submitName"]))
@@ -24,7 +19,7 @@ class CommentForm
                 $_POST["username"],
                 $_POST["email"],
                 $_POST["comment"],
-                $_GET["pid"]
+                $parentId
             );
         }
         if(isset($_POST["submitForm"]))

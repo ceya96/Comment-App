@@ -1,34 +1,17 @@
 <?php
 
-class Comment
+class CommentList
 {
-    private Database $db;
-
+    private Database $database;
 
     public function __construct()
     {
-        $this->db = new Database();
+        $this->database = new Database();
     }
-
-    public function setParent(int $parentId): void
-    {
-        $this->parentId = $parentId;
-    }
-
-    public function save($name, $email, $text, $parentId)
-    {
-        //$this->parentId
-        $sql = $this->db->connection->prepare("INSERT INTO kommentare (name, email, text, pid) VALUES (?,?,?,?)");
-        $sql->bind_param('sssi', $name, $email, $text, $parentId);
-        $sql->execute();
-
-        $this->db->connection->close();
-    }
-
     public function get()
     {
-        $result = $this->db->select();
-        $ResultContainer = $this->db->select();
+        $result = $this->database->select();
+        $ResultContainer = $this->database->select();
         $arrResult = $ResultContainer->fetch_all();
 
         $comments = array();
@@ -91,44 +74,6 @@ class Comment
             echo "<div'><p>Keine Kommentare verfügbar</p></div>";
         }
 
-        ($this->db->connection)->close();
+        ($this->database->connection)->close();
     }
 }
-
-//Model for view
-$answers = [
-    '0' => [
-        '0' => 'yasin@oveleon.de',
-        '1' => 'Yasin',
-        '2' => 'Antwort auf LALA',
-        '3' => '5',
-        '4' => '4',
-    ],
-    '1' => [
-        '0' => 'mitglied3@mustermail.de',
-        '1' => 'Sebastian',
-        '2' => 'Hallo',
-        '3' => '3',
-        '4' => '1',
-    ],
-    '2' => [
-        '0' => 'yasin@oveleon.de',
-        '1' => 'Yasin',
-        '2' => 'Antwort',
-        '3' => '3',
-        '4' => '1',
-    ]
-];
-/*prototyp*/
-/*while ($row = $ResultContainer->fetch_assoc())
-        {
-          if($row["pid"] === 0)
-          {
-              array_push($comments, $row);
-          }
-          else
-          {
-              array_push($answers, $row);
-          }
-        }
-        print_r($answers);*/
