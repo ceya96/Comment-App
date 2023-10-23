@@ -81,7 +81,7 @@ textarea{
     font-family: sans-serif;
     animation: rotate 5s normal linear;
 }
-@keyframes rotate {
+/*@keyframes rotate {
     0% {
         transform:rotateZ(0deg);
     }
@@ -96,7 +96,7 @@ textarea{
     }
     100% {
         transform:rotateZ(360deg);
-    }
+    }*/
 }
 .button:hover {
     background-color: #2e8674;
@@ -226,8 +226,31 @@ iframe{
 #exit:hover{
     transform: scale(1.2);
 }
+#preCodeBtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    color: black;
+    position: fixed;
+    cursor: pointer;
+    right: 5.6%;
+    top: 10.5%;
+    background: inherit;
+    border: solid 2px black;
+
+}
 @media screen and (max-width: 700px){
 
 
 
+}
+
+pre.code {
+    box-shadow: 0 0 3px 15px rgba(0,0,0,.15);
+    background: white;
+    position: fixed;
+    inset:20%;
+    overflow: auto;
+    visibility: hidden;
 }
