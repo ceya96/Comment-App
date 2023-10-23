@@ -1,9 +1,11 @@
 <?php
+session_start();
                         require 'Database.php';
                         require 'Comment.php';
                         require 'CommentForm.php';
                         $comment = new Comment();
                         $commentForm = new CommentForm('submitForm');
+
                         //$comment = new Comment();
 
 
@@ -75,6 +77,10 @@
                 <button class="button" name="submitForm" id="btn" type="submit">
                     senden
                 </button>
+                <button id="preCodeBtn" class="button" name="precode" type="button">
+                    ArrayCode
+                </button>
+
                 <h2>
                     Kommentare
                 </h2>
