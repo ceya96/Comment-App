@@ -14,12 +14,10 @@ class CommentForm
         {
             $comment = new Comment();
             $comment->setParent($parentId);
-
-            $comment->save(
+            $comment->setData(
                 $_POST["username"],
                 $_POST["email"],
                 $_POST["comment"],
-                $parentId
             );
         }
         if(isset($_POST["submitForm"]))

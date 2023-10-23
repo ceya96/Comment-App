@@ -3,36 +3,103 @@
 class Comment
 {
     private Database $db;
+    private int $parentId = 0;
+    private int $commentId;
+    public $name;
+    public $email;
+    public $text;
+    public $tstamp;
 
-
-    public function __construct()
+    public function __construct(int $commentId = 0) //
     {
+        $this->commentId = $commentId;
         $this->db = new Database();
+        if ($commentId)
+        {
+            $this->getById();
+        }
+
+    }
+    private function getById(): void
+    {
+        //Datenbank abfrage hier
+        //Select from Database -> Nach ID die Daten des Kommentares holen, array zurückgeben (fetch etc) dann die Daten zuweisen
+        //.
+        //.
+        //.
+        $this->name = ['name'];
+        $this->email = $['email'];
+        $this->text = $['text'];
+        $this->tstamp = $this['tstamp'];
     }
 
     public function setParent(int $parentId): void
     {
         $this->parentId = $parentId;
     }
-
-    public function save($name, $email, $text, $parentId)
+    public function save()
     {
-        //$this->parentId
+        if ($this->commentId)
+        {
+            //update
+        }
+        else
+        {
+            //insert
+        }
+        //Ausschließlich die connection deiner Datenbankverbindung nutzen, statt $db
         $sql = $this->db->connection->prepare("INSERT INTO kommentare (name, email, text, pid) VALUES (?,?,?,?)");
         $sql->bind_param('sssi', $name, $email, $text, $parentId);
         $sql->execute();
 
-        $this->db->connection->close();
+        ($this->connection)->close();
+    }
+    /*test*/
+    function setData($name, $email, $text)
+    {
+        $this->name = $name;
+        $this->email = $email;
+        $this->text = $text;
+    }
+    function setName($name):void
+    {
+        $this->name = $name;
+    }
+    function setEmail($email):void
+    {
+        $this->email = $email;
+    }
+    function setText($text):void
+    {
+        $this->text = $text;
     }
 
-    public function get()
+    function getData():array
     {
-        $result = $this->db->select();
-        $ResultContainer = $this->db->select();
-        $arrResult = $ResultContainer->fetch_all();
+        $data = [
+            'name' => $this->name,
+            'email' => $this->email,
+            'text' => $this->text
+        ];
+        return $data;
+    }
 
-        $comments = array();
-        $answers = array();
+    public function get():void
+    {
+        $sql = $this->db->connection->prepare("SELECT email, name, text, id, pid, tstamp FROM kommentare ORDER BY tstamp DESC ");
+        $sql->execute();
+        $result = $sql->get_result();
+
+        //$ResultContainer = $result; //eig so muss es gehen -< effizienter da DB nur einmal abgefragt wird
+        $sql = $this->db->connection->prepare("SELECT email, name, text, id, pid, tstamp FROM kommentare ORDER BY tstamp DESC ");
+        $sql->execute();
+        $resultContainer = $sql->get_result();
+        $arrResult = $resultContainer->fetch_all();
+
+        $allComments = [];
+
+        $comments = [];
+        $answers = [];
 
         if ($result->num_rows > 0)
         {
@@ -53,7 +120,7 @@ class Comment
                     }
                 }
             }
-            $answersSorted = array_reverse($answers);
+            $answersSorted = array_reverse($answers); // Sortierung über SQL lösen (ORDER !!) Performance Gründe
             while ($row = $result->fetch_assoc())
             {
                 if ($row["pid"] === 0)
@@ -69,31 +136,26 @@ class Comment
                                 if($data_answer == $row["id"])
                                 {
                                     echo "<div class='container-answers' onmouseover='showDelete(this)' onmouseout='hideDelete(this)'>"."<span class='response-arrow'>". "&#8627;". "</span>"."<div class='author-container-answers'>" . "<span class='author_answers'>" . $value_answer[1] . "</span>" . "<span class='author-mail-answers'>" . " (" . $value_answer[0] . ")" . "</div>" . "<p>" . $value_answer[2] . "</p>". "<button id='deleteBtn' type='button' class='delete-btn'>&#215;</button>". "</div>";
+                                    $row['answers'][] = $value_answer;
                                 }
                             }
                         }
                     }
+                    array_push($allComments, $row);
                     echo "<button type='button' class='answer-btn' data-id= {$row['id']} onclick='openAnswer(this)'>Antworten</button>";
                 }
             }
-            //TEST the arrays
-            /* echo "<br>";
-            echo "<br>";
-            echo "Kommentare Array:"."<br>";
-            print_r($comments);
-            echo "<br>";
-            echo "<br>";
-            echo "Antworten Array:"."<br>";
-            print_r($answers);*/
         }
         else
         {
             echo "<div'><p>Keine Kommentare verfügbar</p></div>";
         }
+        echo printf('<pre id="code" class="code">%s</pre>', print_r($allComments, true));
 
         ($this->db->connection)->close();
     }
 }
+
 
 //Model for view
 $answers = [
