@@ -3,7 +3,7 @@
 class Comment
 {
     private Database $db;
-    private int $parentId = 0;
+    private int $parentId;
     private int $commentId;
     public $name;
     public $email;
@@ -16,7 +16,7 @@ class Comment
         $this->db = new Database();
         if ($commentId)
         {
-            $this->getById();
+            $this->getById();           
         }
 
     }
@@ -24,16 +24,31 @@ class Comment
     {
         //Datenbank abfrage hier
         //Select from Database -> Nach ID die Daten des Kommentares holen, array zurückgeben (fetch etc) dann die Daten zuweisen
-        //.
-        //.
-        //.
-        $this->name = ['name'];
-        $this->email = $['email'];
-        $this->text = $['text'];
-        $this->tstamp = $this['tstamp'];
+
+        // SQL-Abfrage vorbereiten
+        $sql = "SELECT name, email, text, tstamp FROM kommentare WHERE id = ?";
+        $statement = $this->db->connection->prepare($sql);
+        $statement->bind_param("i", $this->commentId);
+
+        // SQL-Abfrage ausführen
+        $statement->execute();
+
+        // Ergebnis abrufen (mit fetch_assoc bekommt man Zeile in assoziativen Array) fetch() holt die mit bind_result zugewiesenen Variablen ab, dass Sie auch darüber aufgerufen werden können
+        $statement->bind_result($name, $email, $text, $tstamp);
+        $statement->fetch();
+
+        // Daten den Eigenschaften zuweisen
+        $this->name = $name;
+        $this->email = $email;
+        $this->text = $text;
+        $this->tstamp = $tstamp;
+
+        // Verbindung schließen
+        $statement->close();
+        $dbConnection->close();
     }
 
-    public function setParent(int $parentId): void
+    public function setParent(int $parentId= 0): void
     {
         $this->parentId = $parentId;
     }
@@ -42,18 +57,25 @@ class Comment
         if ($this->commentId)
         {
             //update
+            $sql = $this->db->connection->prepare("UPDATE kommentare SET name = ?, email = ?, text = ?, pid = ? WHERE id = ?");
+            $sql->bind_param('sssi', $this->name, $this->email, $this->text, $this->parentId);
+            $sql->execute();
+            
+            $this->db->connection->close();
+
         }
         else
         {
             //insert
-        }
-        //Ausschließlich die connection deiner Datenbankverbindung nutzen, statt $db
-        $sql = $this->db->connection->prepare("INSERT INTO kommentare (name, email, text, pid) VALUES (?,?,?,?)");
-        $sql->bind_param('sssi', $name, $email, $text, $parentId);
-        $sql->execute();
+            $sql = $this->db->connection->prepare("INSERT INTO kommentare (name, email, text, pid) VALUES (?,?,?,?)");
+            $sql->bind_param('sssi', $this->name, $this->email, $this->text, $this->parentId);
+            $sql->execute();
 
-        ($this->connection)->close();
+            $this->db->connection->close();
+        }
+    
     }
+
     /*test*/
     function setData($name, $email, $text)
     {

@@ -3,6 +3,7 @@ require 'Database.php';
 require 'Comment.php';
 require 'CommentForm.php';
 $commentForm = new CommentForm('submitAnswer', (int) $_REQUEST['pid']);
+$answer = new Comment;
 ?>
 
 <!DOCTYPE html>

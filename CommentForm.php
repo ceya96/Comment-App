@@ -13,12 +13,9 @@ class CommentForm
         if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["$submitName"]))
         {
             $comment = new Comment();
+            $comment->setData($_POST['username'], $_POST['email'], $_POST['comment']);
             $comment->setParent($parentId);
-            $comment->setData(
-                $_POST["username"],
-                $_POST["email"],
-                $_POST["comment"],
-            );
+            $comment->save();
         }
         if(isset($_POST["submitForm"]))
         {

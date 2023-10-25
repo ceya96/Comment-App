@@ -1,50 +1,51 @@
 <?php
-session_start();
-                        require 'Database.php';
-                        require 'Comment.php';
-                        require 'CommentForm.php';
-                        $comment = new Comment();
-                        $commentForm = new CommentForm('submitForm');
 
-                        //$comment = new Comment();
+require 'Database.php';
+require 'Comment.php';
+require 'CommentForm.php';
+$comment = new Comment;
+$commentForm = new CommentForm('submitForm');
 
 
+//$comment = new Comment();
 
 
-                       /* // Kommentar-Formular Instanz erzeugen
-                        $form = new CommentForm();
 
-                        // Formularfelder zur Verfügugn stellen
-                        $form->setFormFields([
-                                [
-                                        'name'      => 'feldname',
-                                        'label'     => 'Name',
-                                        'type'      => 'text',
-                                        'require'   => true
-                                ],
-                                [
-                                        'name'      => 'feldname2',
-                                        'label'     => 'Name 2',
-                                        'type'      => 'text',
-                                        'require'   => true
-                                ]
-                        ]);
 
-                        // Durch weitere Logic ist es möglich Felder dynamisch hinzuzufügen
-                        if($logic === 'Kunde möchte bei Auswahl von Checkbox A, ein weiteres Feld abfragen')
-                        {
-                            $form->setFormFields([
-                                [
-                                    'name'      => 'weiteresfeld',
-                                    'label'     => 'Name',
-                                    'type'      => 'text',
-                                    'require'   => true
-                                ]
-                            ]);
-                        }
+/* // Kommentar-Formular Instanz erzeugen
+$form = new CommentForm();
 
-                        // Formular generieren -> HTML Ausgabe
-                        echo $form->generateForm();*/
+// Formularfelder zur Verfügugn stellen
+$form->setFormFields([
+        [
+                'name'      => 'feldname',
+                'label'     => 'Name',
+                'type'      => 'text',
+                'require'   => true
+        ],
+        [
+                'name'      => 'feldname2',
+                'label'     => 'Name 2',
+                'type'      => 'text',
+                'require'   => true
+        ]
+]);
+
+// Durch weitere Logic ist es möglich Felder dynamisch hinzuzufügen
+if($logic === 'Kunde möchte bei Auswahl von Checkbox A, ein weiteres Feld abfragen')
+{
+    $form->setFormFields([
+        [
+            'name'      => 'weiteresfeld',
+            'label'     => 'Name',
+            'type'      => 'text',
+            'require'   => true
+        ]
+    ]);
+}
+
+// Formular generieren -> HTML Ausgabe
+echo $form->generateForm();*/
 
 ?>
 <!DOCTYPE html>

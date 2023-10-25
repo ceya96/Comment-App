@@ -97,7 +97,7 @@ textarea{
     100% {
         transform:rotateZ(360deg);
     }*/
-}
+/* } */
 .button:hover {
     background-color: #2e8674;
 }
