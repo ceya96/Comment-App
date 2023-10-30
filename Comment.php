@@ -22,9 +22,6 @@ class Comment
     }
     private function getById(): void
     {
-        //Datenbank abfrage hier
-        //Select from Database -> Nach ID die Daten des Kommentares holen, array zurückgeben (fetch etc) dann die Daten zuweisen
-
         // SQL-Abfrage vorbereiten
         $sql = "SELECT name, email, text, tstamp FROM kommentare WHERE id = ?";
         $statement = $this->db->connection->prepare($sql);
@@ -33,7 +30,7 @@ class Comment
         // SQL-Abfrage ausführen
         $statement->execute();
 
-        // Ergebnis abrufen (mit fetch_assoc bekommt man Zeile in assoziativen Array) fetch() holt die mit bind_result zugewiesenen Variablen ab, dass Sie auch darüber aufgerufen werden können
+        // Ergebnis abrufen (mit fetch_assoc bekommt man Zeile in assoziativen Array) fetch() holt die mit bind_result zugewiesenen Variablen ab, dass Sie auch darüber genutzt werden können
         $statement->bind_result($name, $email, $text, $tstamp);
         $statement->fetch();
 
@@ -45,7 +42,7 @@ class Comment
 
         // Verbindung schließen
         $statement->close();
-        $dbConnection->close();
+        $this->db->connection->close();
     }
 
     public function setParent(int $parentId= 0): void
@@ -62,7 +59,6 @@ class Comment
             $sql->execute();
             
             $this->db->connection->close();
-
         }
         else
         {
@@ -73,10 +69,8 @@ class Comment
 
             $this->db->connection->close();
         }
-    
     }
 
-    /*test*/
     function setData($name, $email, $text)
     {
         $this->name = $name;
@@ -112,7 +106,7 @@ class Comment
         $sql->execute();
         $result = $sql->get_result();
 
-        //$ResultContainer = $result; //eig so muss es gehen -< effizienter da DB nur einmal abgefragt wird
+        //$ResultContainer = $result; //eig muss es so gehen -> effizienter da DB nur einmal abgefragt wird
         $sql = $this->db->connection->prepare("SELECT email, name, text, id, pid, tstamp FROM kommentare ORDER BY tstamp DESC ");
         $sql->execute();
         $resultContainer = $sql->get_result();
@@ -142,23 +136,40 @@ class Comment
                     }
                 }
             }
-            $answersSorted = array_reverse($answers); // Sortierung über SQL lösen (ORDER !!) Performance Gründe
+            $answersSorted = array_reverse($answers);
             while ($row = $result->fetch_assoc())
             {
                 if ($row["pid"] === 0)
                 {
-                    //Todo: generate the HTML inside the HTML not in php | pass the comments via Array containers
+                    $response = [];
                     echo "<div class='author-container'>" . "<span class='author'>" . $row["name"] . "<span class='author-mail'>" . " (" . $row["email"] . ")" . "</span>" . "<span class='author-tstamp'>" . $row["tstamp"] . "</span>". "</div>" . "<p>" . $row["text"] . "</p>";
                     foreach ($answersSorted as $key_answer => $value_answer)
                     {
                         foreach ($value_answer as $datakey_answer => $data_answer)
                         {
+                            
+                            if ($datakey_answer == 0) 
+                            {
+                                $response['email'] = $data_answer;
+                            } 
+                            if ($datakey_answer == 1) {
+                                $response['name'] = $data_answer;
+                            } 
+                            if ($datakey_answer == 2) 
+                            {
+                                $response['text'] = $data_answer;
+                            } 
+                            if ($datakey_answer == 3) 
+                            {
+                                $response['id'] = $data_answer;
+                            } 
                             if ($datakey_answer == 4)
                             {
+                                $response['pid'] = $data_answer;
                                 if($data_answer == $row["id"])
                                 {
                                     echo "<div class='container-answers' onmouseover='showDelete(this)' onmouseout='hideDelete(this)'>"."<span class='response-arrow'>". "&#8627;". "</span>"."<div class='author-container-answers'>" . "<span class='author_answers'>" . $value_answer[1] . "</span>" . "<span class='author-mail-answers'>" . " (" . $value_answer[0] . ")" . "</div>" . "<p>" . $value_answer[2] . "</p>". "<button id='deleteBtn' type='button' class='delete-btn'>&#215;</button>". "</div>";
-                                    $row['answers'][] = $value_answer;
+                                    $row['answers'][] = $response;
                                 }
                             }
                         }
@@ -172,47 +183,9 @@ class Comment
         {
             echo "<div'><p>Keine Kommentare verfügbar</p></div>";
         }
-        echo printf('<pre id="code" class="code">%s</pre>', print_r($allComments, true));
+        printf('<pre id="code" class="code">%s</pre>', print_r($allComments, true));
 
         ($this->db->connection)->close();
     }
 }
 
-
-//Model for view
-$answers = [
-    '0' => [
-        '0' => 'yasin@oveleon.de',
-        '1' => 'Yasin',
-        '2' => 'Antwort auf LALA',
-        '3' => '5',
-        '4' => '4',
-    ],
-    '1' => [
-        '0' => 'mitglied3@mustermail.de',
-        '1' => 'Sebastian',
-        '2' => 'Hallo',
-        '3' => '3',
-        '4' => '1',
-    ],
-    '2' => [
-        '0' => 'yasin@oveleon.de',
-        '1' => 'Yasin',
-        '2' => 'Antwort',
-        '3' => '3',
-        '4' => '1',
-    ]
-];
-/*prototyp*/
-/*while ($row = $ResultContainer->fetch_assoc())
-        {
-          if($row["pid"] === 0)
-          {
-              array_push($comments, $row);
-          }
-          else
-          {
-              array_push($answers, $row);
-          }
-        }
-        print_r($answers);*/

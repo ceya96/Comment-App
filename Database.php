@@ -14,10 +14,3 @@ class Database
         }
     }
 }
-
-// (!!) Datenbank kennt keine Kommentare
-//Bei Login will ich die gleichen Methode nutzen aber User Daten 'inserten' ->ANPASSEN
-//.
-//.
-//.
-//Fortgeschrittene Lösung -> eine Datebankabfrage mit Variablem Input

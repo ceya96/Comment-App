@@ -3,7 +3,6 @@
     padding:0;
     margin: 0;
 }
-
 button{
     all:unset
 }
@@ -17,7 +16,6 @@ h1{
     margin-bottom: 40px;
     word-wrap: break-word;
     padding: 0 10px;
-    /*animation: rotate 5s normal linear infinite;*/
 }
 h2{
     font-family: sans-serif;
@@ -142,7 +140,6 @@ textarea{
 .container-answers p{
     padding-top: 4px;
     padding-left:40px;
-
 }
 .response-arrow{
     position: absolute;
@@ -170,7 +167,6 @@ textarea{
     margin-top: 5px;
     float: right;
     border-radius: 16px;
-
 }
 .delete-btn{
     display: flex;
@@ -240,12 +236,6 @@ iframe{
     border: solid 2px black;
 
 }
-@media screen and (max-width: 700px){
-
-
-
-}
-
 pre.code {
     box-shadow: 0 0 3px 15px rgba(0,0,0,.15);
     background: white;
@@ -253,4 +243,14 @@ pre.code {
     inset:20%;
     overflow: auto;
     visibility: hidden;
+}
+
+@media screen and (max-height: 800px){
+    iframe{
+        height: 70%;        
+    }
+    #exit{
+        top: 4%;
+        right:18%;
+    }
 }

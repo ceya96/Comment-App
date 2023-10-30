@@ -22,24 +22,4 @@ class CommentForm
             header("Location: index.php");
         }
     }
-
-    /**
-     * Set multiple form fields.
-     *
-     * @return void
-     */
-   /* public function setFormFields(array $fields): void
-    {
-
-    }
-
-    /**
-     * Return html form.
-     *
-     * @return string
-     */
-    /*public function generateForm(): string
-    {
-
-    }*/
 }
