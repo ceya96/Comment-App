@@ -106,7 +106,7 @@ class Comment
         $sql->execute();
         $result = $sql->get_result();
 
-        //$ResultContainer = $result; //eig muss es so gehen -> effizienter da DB nur einmal abgefragt wird
+        //$ResultContainer = $result;
         $sql = $this->db->connection->prepare("SELECT email, name, text, id, pid, tstamp FROM kommentare ORDER BY tstamp DESC ");
         $sql->execute();
         $resultContainer = $sql->get_result();
@@ -140,8 +140,7 @@ class Comment
             while ($row = $result->fetch_assoc())
             {
                 if ($row["pid"] === 0)
-                {
-                    $response = [];
+                {$response = [];
                     echo "<div class='author-container'>" . "<span class='author'>" . $row["name"] . "<span class='author-mail'>" . " (" . $row["email"] . ")" . "</span>" . "<span class='author-tstamp'>" . $row["tstamp"] . "</span>". "</div>" . "<p>" . $row["text"] . "</p>";
                     foreach ($answersSorted as $key_answer => $value_answer)
                     {
