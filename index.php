@@ -3,8 +3,10 @@
 require 'Database.php';
 require 'Comment.php';
 require 'CommentForm.php';
+require 'CommentList.php';
 $comment = new Comment;
 $commentForm = new CommentForm('submitForm');
+$commentList = new CommentList;
 
 ?>
 <!DOCTYPE html>
@@ -44,12 +46,30 @@ $commentForm = new CommentForm('submitForm');
                 <h2>
                     Kommentare
                 </h2>
-                <div class="comment-box">
-                    <span>
-                        <?php
-                        $comment->get();
-                        ?>
-                    </span>
+                <div class="comment-box">                   
+                    <?php
+                    //store the returned $comments array in a variable
+                    $comments = $commentList->getAll();
+                    ?>
+                    <ul>
+                        <?php foreach ($comments as $comment) { ?>
+                            <li>
+                                <?php echo $comment['name']; ?>
+                                <p><?php echo $comment['text']; ?></p>
+                                <!-- if there is a answer in the answer-key stored, echo it as well -->
+                                <?php if (!empty($comment['answers'])) { ?>
+                                    <ul>
+                                        <?php foreach ($comment['answers'] as $answer) { ?>
+                                            <li>
+                                                <?php echo $answer['name']; ?>
+                                                <p><?php echo $answer['text']; ?></p>
+                                            </li>
+                                        <?php } ?>
+                                    </ul>
+                                <?php } ?>
+                            </li>
+                        <?php } ?>   
+                    </ul> 
                 </div>
             </form>
         </div>

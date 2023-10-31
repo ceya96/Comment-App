@@ -93,100 +93,53 @@ class Comment
     function getData():array
     {
         $data = [
-            'name' => $this->name,
-            'email' => $this->email,
-            'text' => $this->text
+            'name'   => $this->name,
+            'email'  => $this->email,
+            'text'   => $this->text,
+            'id'     => $this->commentId,
+            'tstamp' => $this->tstamp,
         ];
         return $data;
     }
 
-    public function get():void
+    public function get(): array
     {
-        $sql = $this->db->connection->prepare("SELECT email, name, text, id, pid, tstamp FROM kommentare ORDER BY tstamp DESC ");
+        $sql = $this->db->connection->prepare("SELECT email, name, text, id, pid, tstamp FROM kommentare WHERE pid = 0 ORDER BY tstamp DESC ");
         $sql->execute();
-        $result = $sql->get_result();
+        $commentResult = $sql->get_result();
 
-        //$ResultContainer = $result;
-        $sql = $this->db->connection->prepare("SELECT email, name, text, id, pid, tstamp FROM kommentare ORDER BY tstamp DESC ");
+        $sql = $this->db->connection->prepare("SELECT email, name, text, id, pid, tstamp FROM kommentare WHERE pid != 0 ORDER BY tstamp DESC ");
         $sql->execute();
-        $resultContainer = $sql->get_result();
-        $arrResult = $resultContainer->fetch_all();
+        $answerResult = $sql->get_result();
 
-        $allComments = [];
-
-        $comments = [];
         $answers = [];
+        $comments = [];
 
-        if ($result->num_rows > 0)
+        while ($answer = $answerResult->fetch_assoc())
         {
-            foreach ($arrResult as $key => $value)
+            if(!array_key_exists($answer['pid'], $answers))
             {
-                foreach ($value as $datakey => $data)
-                {
-                    if ($datakey == 4)
-                    {
-                        if($data === 0)
-                        {
-                            array_push($comments, $value);
-                        }
-                        else
-                        {
-                            array_push($answers, $value);
-                        }
-                    }
-                }
+                $answers[$answer['pid']] = [$answer];
             }
-            $answersSorted = array_reverse($answers);
-            while ($row = $result->fetch_assoc())
+            else
             {
-                if ($row["pid"] === 0)
-                {$response = [];
-                    echo "<div class='author-container'>" . "<span class='author'>" . $row["name"] . "<span class='author-mail'>" . " (" . $row["email"] . ")" . "</span>" . "<span class='author-tstamp'>" . $row["tstamp"] . "</span>". "</div>" . "<p>" . $row["text"] . "</p>";
-                    foreach ($answersSorted as $key_answer => $value_answer)
-                    {
-                        foreach ($value_answer as $datakey_answer => $data_answer)
-                        {
-                            
-                            if ($datakey_answer == 0) 
-                            {
-                                $response['email'] = $data_answer;
-                            } 
-                            if ($datakey_answer == 1) {
-                                $response['name'] = $data_answer;
-                            } 
-                            if ($datakey_answer == 2) 
-                            {
-                                $response['text'] = $data_answer;
-                            } 
-                            if ($datakey_answer == 3) 
-                            {
-                                $response['id'] = $data_answer;
-                            } 
-                            if ($datakey_answer == 4)
-                            {
-                                $response['pid'] = $data_answer;
-                                if($data_answer == $row["id"])
-                                {
-                                    echo "<div class='container-answers' onmouseover='showDelete(this)' onmouseout='hideDelete(this)'>"."<span class='response-arrow'>". "&#8627;". "</span>"."<div class='author-container-answers'>" . "<span class='author_answers'>" . $value_answer[1] . "</span>" . "<span class='author-mail-answers'>" . " (" . $value_answer[0] . ")" . "</div>" . "<p>" . $value_answer[2] . "</p>". "<button id='deleteBtn' type='button' class='delete-btn'>&#215;</button>". "</div>";
-                                    $row['answers'][] = $response;
-                                }
-                            }
-                        }
-                    }
-                    array_push($allComments, $row);
-                    echo "<button type='button' class='answer-btn' data-id= {$row['id']} onclick='openAnswer(this)'>Antworten</button>";
-                }
+                $answers[$answer['pid']][] = $answer;
             }
         }
-        else
-        {
-            echo "<div'><p>Keine Kommentare verfügbar</p></div>";
-        }
-        printf('<pre id="code" class="code">%s</pre>', print_r($allComments, true));
 
-        ($this->db->connection)->close();
+        while ($comment = $commentResult->fetch_assoc())
+        {
+            if(array_key_exists($comment['id'], $answers)) 
+            {
+                $comment['answers'] = $answers[ $comment['id'] ];
+            }
+
+            $comments[] = $comment;
+        }
+
+        $this->db->connection->close();
+
+        return $comments;
     }
 }
-
-//pushtest
 

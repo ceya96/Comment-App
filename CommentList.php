@@ -4,14 +4,58 @@ class CommentList
 {
     private Database $db;
 
-    public function __construct()
+    function __construct()
     {
         $this->db = new Database();
     }
-    public function getAll():array //Todo $arrResult soll ungefilter alle Kommentare ausgeben  und eine weitere Methode soll diese verschalten und ordnen , quasi dass was ich gebaut habe nur ist meine Methode nur dafür da 2 Level Kommentare und Antworten zu bauen und die neue Methode übernimmt auch quasi Antwort auf Antwort
+
+    function getAll():array //Todo $arrResult soll ungefilter alle Kommentare ausgeben  und eine weitere Methode soll diese verschalten und ordnen , quasi dass was ich gebaut habe nur ist meine Methode nur dafür da 2 Level Kommentare und Antworten zu bauen und die neue Methode übernimmt auch quasi Antwort auf Antwort
     {
-        //Array output
-        $sql = $this->db->connection->prepare("SELECT email, name, text, id, pid, tstamp FROM kommentare ORDER BY tstamp DESC ");
+        //Get comments from Database
+        $sql = $this->db->connection->prepare("SELECT email, name, text, id, pid, tstamp FROM kommentare WHERE pid = 0 ORDER BY tstamp DESC");
+        $sql->execute();
+        $commentResult = $sql->get_result();
+        //Get answers from Database
+        $sql = $this->db->connection->prepare("SELECT email, name, text, id, pid, tstamp FROM kommentare WHERE pid != 0 ORDER BY tstamp ASC");
+        $sql->execute();
+        $answerResult = $sql->get_result();
+
+        $answers = [];
+        $comments = [];
+
+        //fetch answer container and fill the $answers container in order
+        while ($answer = $answerResult->fetch_assoc())
+        {
+            if(!array_key_exists($answer['pid'], $answers))
+            {
+                $answers[$answer['pid']] = [$answer];
+            }
+            else
+            {
+                $answers[$answer['pid']][] = $answer;
+            }
+        }
+        
+        //Append the answer array toe the right comment and push it as whole in the final $comments container
+        while ($comment = $commentResult->fetch_assoc())
+        {
+            if(array_key_exists($comment['id'], $answers)) 
+            {
+                $comment['answers'] = $answers[ $comment['id'] ];
+            }
+
+            $comments[] = $comment;
+        }
+
+        $this->db->connection->close();
+
+        return $comments;
+    }
+}
+
+
+        /* //Array output
+        $sql = $this->db->connection->prepare("SELECT email, name, text, id, pid, tstamp FROM kommentare WHERE pid = 0 ORDER BY tstamp DESC");
         $sql->execute();
         $result = $sql->get_result();
 
@@ -90,11 +134,12 @@ class CommentList
             //no comments available
         }
         printf('<pre id="code" class="code">%s</pre>', print_r($allComments, true));
-        return $allComments;
 
         ($this->db->connection)->close();
-    }
+
+        return $allComments; */
+    /* } */
         
-}
+/* } */
 //KOMMENTAR-> HTML durch platzhalter in festgeschriebene Templates erzeugen??
 //Ähnlich  wie bei Contao  Erweiterungen (?)
