@@ -96,5 +96,5 @@ class CommentList
     }
         
 }
-//KOMMENTAR-> HTML durch platzhalter in festgeschriebene Templates erzeugen?
+//KOMMENTAR-> HTML durch platzhalter in festgeschriebene Templates erzeugen??
 //Ähnlich  wie bei Contao  Erweiterungen (?)
