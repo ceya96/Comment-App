@@ -31,7 +31,7 @@ class User
         $this->password = $password;
     }
 
-    function save()
+    function save(): void
     {
         $sql = $this->db->connection->prepare("INSERT INTO users (username, email, password) VALUES (?,?,?)");
         $sql->bind_param('sss', $this->name, $this->email, $this->password);

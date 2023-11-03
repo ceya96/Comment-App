@@ -49,7 +49,7 @@ class Comment
     {
         $this->parentId = $parentId;
     }
-    public function save()
+    public function save():void
     {
         if ($this->commentId)
         {
