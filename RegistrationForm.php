@@ -15,7 +15,7 @@ class RegistrationForm
             $user = new User();
             $user->setData($_POST['username'], $_POST['email'], $hashedPassword);
             $user->save();
-            header("Location: index.php");
+            header("Location: regisSuccess.php");
         }
     }
 
