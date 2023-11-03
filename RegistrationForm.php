@@ -11,8 +11,9 @@ class RegistrationForm
     {
         if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["$submitName"]))
         {
+            $hashedPassword = password_hash(($_POST['password']), PASSWORD_DEFAULT);
             $user = new User();
-            $user->setData($_POST['username'], $_POST['email'], $_POST['password']);
+            $user->setData($_POST['username'], $_POST['email'], $hashedPassword);
             $user->save();
             header("Location: index.php");
         }
