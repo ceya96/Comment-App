@@ -1,5 +1,6 @@
-<?php
+<?php require_once("header.php");
 
+$_SESSION['username'] = "";
 ?>
 
 <!DOCTYPE html>

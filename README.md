@@ -25,7 +25,7 @@ $comment->name = 'Daniele';
 $comment->setName('Daniele');
 $comment->save(); //-> INSERT oder UPDATE wie wurde ich initialisiert (ID Abfrage)
 
-// Kommentarformular
+//Kommentarformular
 
 // Kommentare ausgeben checked
 $comment = new Comment($id);

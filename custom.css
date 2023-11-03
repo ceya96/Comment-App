@@ -244,6 +244,12 @@ pre.code {
     overflow: auto;
     visibility: hidden;
 }
+ul {
+    margin-left: 20px;
+}
+li {
+    padding: 5px;
+}
 
 @media screen and (max-height: 800px){
     iframe{

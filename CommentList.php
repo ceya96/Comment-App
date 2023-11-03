@@ -6,7 +6,7 @@ class CommentList
 
     function __construct()
     {
-        $this->db = new Database();
+        $this->db = new Database("localhost", "root", "", "kommentare");
     }
 
     function getAll():array //Todo $arrResult soll ungefilter alle Kommentare ausgeben  und eine weitere Methode soll diese verschalten und ordnen , quasi dass was ich gebaut habe nur ist meine Methode nur dafür da 2 Level Kommentare und Antworten zu bauen und die neue Methode übernimmt auch quasi Antwort auf Antwort
@@ -28,15 +28,17 @@ class CommentList
         {
             if(!array_key_exists($answer['pid'], $answers))
             {
+                //add new key and create new array (2. dimension) and push directly the value
                 $answers[$answer['pid']] = [$answer];
             }
             else
             {
+                //add new value under given key
                 $answers[$answer['pid']][] = $answer;
             }
         }
         
-        //Append the answer array toe the right comment and push it as whole in the final $comments container
+        //Append the answer array to the right comment and push it as whole in the final $comments container
         while ($comment = $commentResult->fetch_assoc())
         {
             if(array_key_exists($comment['id'], $answers)) 

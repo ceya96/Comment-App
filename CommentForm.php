@@ -8,7 +8,7 @@ class CommentForm
         $this->handleSubmit($submitName, $parentId);
     }
 
-    private function handleSubmit($submitName, int $parentId): void
+    private function handleSubmit(string $submitName, int $parentId): void
     {
         if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["$submitName"]))
         {
@@ -22,4 +22,24 @@ class CommentForm
             header("Location: index.php");
         }
     }
+
+    /**
+     * Set multiple form fields.
+     *
+     * @return void
+     */
+   /* public function setFormFields(array $fields): void
+    {
+
+    }
+
+    /**
+     * Return html form.
+     *
+     * @return string
+     */
+    /*public function generateForm(): string
+    {
+
+    }*/
 }
