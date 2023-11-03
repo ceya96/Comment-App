@@ -4,7 +4,6 @@ require 'Database.php';
 require 'Comment.php';
 require 'CommentForm.php';
 require 'CommentList.php';
-$comment = new Comment;
 $commentForm = new CommentForm('submitForm');
 $commentList = new CommentList;
 
@@ -39,10 +38,6 @@ $commentList = new CommentList;
                 <button class="button" name="submitForm" id="btn" type="submit">
                     senden
                 </button>
-                <button id="preCodeBtn" class="button" name="precode" type="button">
-                    ArrayCode
-                </button>
-
                 <h2>
                     Kommentare
                 </h2>

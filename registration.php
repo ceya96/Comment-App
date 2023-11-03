@@ -1,6 +1,13 @@
-<?php require_once("header.php");
-
+<?php
+require_once("header.php");
 $_SESSION['username'] = "";
+
+require_once("header.php");
+require 'Database.php';
+require 'RegistrationForm.php';
+require 'User.php';
+
+$regisForm = new RegistrationForm('submitRegis');
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +34,7 @@ $_SESSION['username'] = "";
                 <input type="password" id="password" name="password"  required placeholder="Dein Passwort">
                 <input type="checkbox" name="checkbox" onclick="showPassword()">
                 <label id="passwordLabel" for="checkbox">Passwort anzeigen</label>
-                <button class="button" name="submitRegistration" id="btn" type="submit">
+                <button class="button" name="submitRegis" id="btn" type="submit">
                     Registrieren
                 </button>
             </form>
