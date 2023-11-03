@@ -9,7 +9,7 @@ class User
 
     public function __construct() //
     {
-        $this->db = new Database("kommentare");
+        $this->db = new Database("localhost", "root", "", "kommentare");
     }
 
     function setData($name, $email, $password)
