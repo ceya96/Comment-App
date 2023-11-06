@@ -3,17 +3,17 @@
 class CommentForm
 {
 
-    public function __construct(string $submitName, int $parentId = 0)
+    public function __construct(string $submitName, int $userID, int $parentId = 0)
     {
-        $this->handleSubmit($submitName, $parentId);
+        $this->handleSubmit($submitName, $userID, $parentId);
     }
 
-    private function handleSubmit(string $submitName, int $parentId): void
+    private function handleSubmit(string $submitName, int $userID, int $parentId): void
     {
         if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["$submitName"]))
         {
             $comment = new Comment();
-            $comment->setData($_POST['username'], $_POST['email'], $_POST['comment']);
+            $comment->setData($userID, $_POST['comment']);
             $comment->setParent($parentId);
             $comment->save();
         }

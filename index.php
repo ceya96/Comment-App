@@ -5,7 +5,7 @@ require 'Database.php';
 require 'Comment.php';
 require 'CommentForm.php';
 require 'CommentList.php';
-$commentForm = new CommentForm('submitForm');
+$commentForm = new CommentForm('submitForm', $_SESSION['user_id']);
 $commentList = new CommentList;
 
 //protect the index.php

@@ -9,7 +9,7 @@ class CommentList
         $this->db = new Database("localhost", "root", "", "kommentare");
     }
 
-    function getAll():array //Todo $arrResult soll ungefilter alle Kommentare ausgeben  und eine weitere Methode soll diese verschalten und ordnen , quasi dass was ich gebaut habe nur ist meine Methode nur dafür da 2 Level Kommentare und Antworten zu bauen und die neue Methode übernimmt auch quasi Antwort auf Antwort
+    function getAll($userID):array //Todo $arrResult soll ungefilter alle Kommentare ausgeben  und eine weitere Methode soll diese verschalten und ordnen , quasi dass was ich gebaut habe nur ist meine Methode nur dafür da 2 Level Kommentare und Antworten zu bauen und die neue Methode übernimmt auch quasi Antwort auf Antwort
     {
         //Get comments from Database
         $sql = $this->db->connection->prepare("SELECT email, name, text, id, pid, tstamp FROM kommentare WHERE pid = 0 ORDER BY tstamp DESC");

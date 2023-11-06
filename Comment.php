@@ -9,6 +9,7 @@ class Comment
     public $email;
     public $text;
     public $tstamp;
+    public $userID;
 
     public function __construct(int $commentId = 0) //
     {
@@ -60,30 +61,25 @@ class Comment
             
             $this->db->connection->close();
         }
-        else
+        elseif($userID)
         {
             //insert
-            $sql = $this->db->connection->prepare("INSERT INTO kommentare (name, email, text, pid) VALUES (?,?,?,?)");
-            $sql->bind_param('sssi', $this->name, $this->email, $this->text, $this->parentId);
+            $sql = $this->db->connection->prepare("INSERT INTO kommentare (userId, text, pid) VALUES (?,?,?)");
+            $sql->bind_param('isi', $userID, $this->text, $this->parentId);
             $sql->execute();
 
             $this->db->connection->close();
         }
     }
 
-    function setData($name, $email, $text)
+    function setData($userID, $text)
     {
-        $this->name = $name;
-        $this->email = $email;
+        $this->userID = $userID;
         $this->text = $text;
     }
-    function setName($name):void
+    function setUserID($userID):void
     {
-        $this->name = $name;
-    }
-    function setEmail($email):void
-    {
-        $this->email = $email;
+        $this->userID = $userID;
     }
     function setText($text):void
     {

@@ -23,7 +23,7 @@ class LoginForm
 
     private function login(string $username)
     {
-        $stmt = $this->db->connection->prepare("SELECT username, password FROM users WHERE username = ?");
+        $stmt = $this->db->connection->prepare("SELECT userId, username, password FROM users WHERE username = ?");
         $stmt->bind_param("s", $username);
         $stmt->execute();
 
@@ -36,6 +36,7 @@ class LoginForm
             if(password_verify(($_POST['password']), $row['password']))
             {
                 $_SESSION['username'] = $row['username'];
+                $_SESSION['user_id'] = $row['userId'];
                 header("Location: index.php");
                 exit();
             }
