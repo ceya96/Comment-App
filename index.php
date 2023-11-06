@@ -7,6 +7,12 @@ require 'CommentList.php';
 $commentForm = new CommentForm('submitForm');
 $commentList = new CommentList;
 
+//protect the index.php
+/* if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
+    exit();
+} */
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,6 +75,7 @@ $commentList = new CommentList;
             </form>
         </div>
     </div>
+    <a href="logout.php">Abmelden</a>
     <script src="main.js"></script>
 </body>
 
