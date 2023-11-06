@@ -1,6 +1,5 @@
 <?php
 require_once("header.php");
-$_SESSION['username'] = "";
 
 require_once("header.php");
 require 'Database.php';

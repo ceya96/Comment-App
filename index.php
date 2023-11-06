@@ -1,4 +1,5 @@
 <?php
+require_once("header.php");
 
 require 'Database.php';
 require 'Comment.php';
@@ -8,10 +9,11 @@ $commentForm = new CommentForm('submitForm');
 $commentList = new CommentList;
 
 //protect the index.php
-/* if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['username'])) 
+{
     header("Location: login.php");
     exit();
-} */
+} 
 
 ?>
 <!DOCTYPE html>

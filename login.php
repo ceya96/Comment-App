@@ -1,6 +1,9 @@
 <?php require_once("header.php");
 
-$_SESSION['username'] = "";
+require "Database.php";
+require "LoginForm.php";
+
+$login = new LoginForm("submitLogin");
 ?>
 
 <!DOCTYPE html>
@@ -25,10 +28,14 @@ $_SESSION['username'] = "";
             <input type="password" id="password" name="password"  required placeholder="Passwort">
             <input type="checkbox" name="checkbox" onclick="showPassword()">
             <label id="passwordLabel" for="checkbox">Passwort anzeigen</label>
-            <button class="button" name="submitRegis" id="btn" type="submit">
+            <button class="button" name="submitLogin" id="btn" type="submit">
                 Anmelden
             </button>
         </form>
+        <?php if (isset($_SESSION['loginError'] )): ?>
+        <p class="loginError"><?php echo $_SESSION['loginError']; ?></p>
+        <?php endif; ?>
+
     </div>
 </div>
 <script>
