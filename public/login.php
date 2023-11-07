@@ -1,7 +1,11 @@
-<?php require_once("header.php");
+<?php
 
-require "Database.php";
-require "LoginForm.php";
+require_once("header.php");
+
+require "../src/Database/Database.php";
+require "../src/Form/LoginForm.php";
+
+use CommentaryApp\Form\LoginForm;
 
 $login = new LoginForm("submitLogin");
 ?>
@@ -9,7 +13,7 @@ $login = new LoginForm("submitLogin");
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="registration.css">
+    <link rel="stylesheet" href="assets/css/registration.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>

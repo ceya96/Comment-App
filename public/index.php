@@ -1,12 +1,16 @@
 <?php
-require_once("header.php");
 
-require 'Database.php';
-require 'Comment.php';
-require 'CommentForm.php';
-require 'CommentList.php';
-$commentForm = new CommentForm('submitForm', $_SESSION['user_id']);
-$commentList = new CommentList;
+require_once("header.php");
+//require '../src/Database/Database.php';
+//require '../src/Entity/Comment.php';
+require '../src/Classes/CommentList.php';
+require '../src/Form/CommentForm.php';
+
+use CommentaryApp\Form\CommentForm;
+use CommentaryApp\Classes\CommentList;
+
+$commentForm = new CommentForm('submitForm');
+$commentList = new CommentList();
 
 //protect the index.php
 if (!isset($_SESSION['username']))
@@ -19,7 +23,7 @@ if (!isset($_SESSION['username']))
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="custom.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kommentar Übung</title>
@@ -73,6 +77,6 @@ if (!isset($_SESSION['username']))
         </div>
     </div>
     <a href="logout.php">Abmelden</a>
-    <script src="main.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 
