@@ -1,6 +1,6 @@
 <?php
 require_once("header.php");
-$_SESSION['username'] = "";
+
 require 'Database.php';
 require 'Comment.php';
 require 'CommentForm.php';
@@ -23,12 +23,7 @@ $answer = new Comment;
     </h2>
     <div class="container-form">
         <form id="answers" method= "POST" action="">
-            <label for="name"></label>
-            <input type="text" id="name" name="username" required placeholder=" Dein Name">
-            <br>
-            <br>
-            <label for="email"></label>
-            <input type="email" id="email" name="email"  required placeholder="Deine E-Mail">
+
             <label for="comment"></label>
             <textarea id="comment" name="comment" rows="5.5"  placeholder="Deine Antwort" required></textarea>
             <button class="button" name="submitAnswer" id="answerbtn" type="submit">

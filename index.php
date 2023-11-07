@@ -28,6 +28,9 @@ if (!isset($_SESSION['username']))
     <a id="exit" onclick="">&#9587;</a>
     <div id="containerid" class="container">
         <h2 class="header">
+            Hallo <?php echo $_SESSION['username']; ?>
+            <br>
+            <br>
             Hinterlasse eine Nachricht!
         </h2>
         <div class="container-form">
@@ -50,6 +53,7 @@ if (!isset($_SESSION['username']))
                             <li>
                                 <?php echo $comment['username']; ?>
                                 <p><?php echo $comment['text']; ?></p>
+                                <button type='button' class='answer-btn' data-id= $comment['id'] onclick='openAnswer(this)'>Antworten</button>
                                 <!-- if there is a answer in the answer-key stored, echo it as well -->
                                 <?php if (!empty($comment['answers'])) { ?>
                                     <ul>
