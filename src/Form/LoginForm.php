@@ -1,5 +1,11 @@
 <?php
 
+namespace CommentaryApp\Form;
+
+require_once __DIR__ . '/../../src/Database/Database.php';
+
+use CommentaryApp\Database\Database;
+
 class LoginForm
 {
     private Database $db;
@@ -12,8 +18,7 @@ class LoginForm
 
     private function handleLogin(string $submitName): void
     {
-        if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["$submitName"]))
-        {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["$submitName"])) {
             $this->login($_POST['username']);
         }
     }
@@ -27,23 +32,17 @@ class LoginForm
         $result = $stmt->get_result();
 
         //if the username got one result its valid
-        if($result->num_rows == 1)
-        {
+        if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
-            if (password_verify(($_POST['password']), $row['password']))
-            {
+            if (password_verify(($_POST['password']), $row['password'])) {
                 $_SESSION['username'] = $row['username'];
                 $_SESSION['userID'] = $row['userID'];
                 header("Location: index.php");
                 exit();
+            } else {
+                $_SESSION['loginError'] = "Benutzername oder Passwort ungültig";
             }
-            else
-            {
-                $_SESSION['loginError']  = "Benutzername oder Passwort ungültig";
-            }
-        }
-        else
-        {
+        } else {
             $_SESSION['loginError'] = "Benutzername oder Passwort ungültig";
         }
     }

@@ -1,5 +1,11 @@
 <?php
 
+namespace CommentaryApp\Entity;
+
+require_once __DIR__ . '/../../src/Database/Database.php';
+
+use CommentaryApp\Database\Database;
+
 class User
 {
     private Database $db;
@@ -18,15 +24,18 @@ class User
         $this->email = $email;
         $this->password = $password;
     }
-    function setName($name):void
+
+    function setName($name): void
     {
         $this->name = $name;
     }
-    function setEmail($email):void
+
+    function setEmail($email): void
     {
         $this->email = $email;
     }
-    function setText($password):void
+
+    function setText($password): void
     {
         $this->password = $password;
     }
