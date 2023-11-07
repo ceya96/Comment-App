@@ -1,9 +1,14 @@
 <?php
+
 require_once("header.php");
 
-require 'Database.php';
-require 'Comment.php';
-require 'CommentForm.php';
+require '../src/Database/Database.php';
+require '../src/Entity/Comment.php';
+require '../src/Form/CommentForm.php';
+
+use CommentaryApp\Entity\Comment;
+use CommentaryApp\Form\CommentForm;
+
 $commentForm = new CommentForm('submitAnswer', (int) $_REQUEST['pid']);
 $answer = new Comment;
 ?>
@@ -11,7 +16,7 @@ $answer = new Comment;
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="answers.css">
+    <link rel="stylesheet" href="assets/css/answers.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kommentar Übung</title>
