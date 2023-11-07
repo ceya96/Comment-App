@@ -5,11 +5,10 @@ class Comment
     private Database $db;
     private int $parentId;
     private int $commentId;
-    public $name;
-    public $email;
+    public $username;
+    public $userID;
     public $text;
     public $tstamp;
-    public $userID;
 
     public function __construct(int $commentId = 0) //
     {
@@ -61,25 +60,30 @@ class Comment
             
             $this->db->connection->close();
         }
-        elseif($userID)
+        else
         {
             //insert
-            $sql = $this->db->connection->prepare("INSERT INTO kommentare (userId, text, pid) VALUES (?,?,?)");
-            $sql->bind_param('isi', $userID, $this->text, $this->parentId);
+            $sql = $this->db->connection->prepare("INSERT INTO kommentare (userID, username, text, pid) VALUES (?,?,?,?)");
+            $sql->bind_param('issi', $this->userID, $this->username, $this->text, $this->parentId);
             $sql->execute();
 
             $this->db->connection->close();
         }
     }
 
-    function setData($userID, $text)
+    function setData($username, $userID, $text): void
     {
+        $this->username = $username;
         $this->userID = $userID;
         $this->text = $text;
     }
     function setUserID($userID):void
     {
         $this->userID = $userID;
+    }
+    function setUsername($username):void
+    {
+        $this->username = $username;
     }
     function setText($text):void
     {
@@ -89,8 +93,8 @@ class Comment
     function getData():array
     {
         $data = [
-            'name' => $this->name,
-            'email' => $this->email,
+            'username' => $this->username,
+            'userID' => $this->userID,
             'text' => $this->text
         ];
         return $data;

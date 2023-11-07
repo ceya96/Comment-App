@@ -14,16 +14,13 @@ class LoginForm
     {
         if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["$submitName"]))
         {
-            $hashedPassword = password_hash(($_POST['password']), PASSWORD_DEFAULT);
-            $this->password = $hashedPassword;
             $this->login($_POST['username']);
-
         }
     }
 
-    private function login(string $username)
+    private function login(string $username): void
     {
-        $stmt = $this->db->connection->prepare("SELECT userId, username, password FROM users WHERE username = ?");
+        $stmt = $this->db->connection->prepare("SELECT userID, username, password, email FROM users WHERE username = ?");
         $stmt->bind_param("s", $username);
         $stmt->execute();
 
@@ -33,10 +30,10 @@ class LoginForm
         if($result->num_rows == 1)
         {
             $row = $result->fetch_assoc();
-            if(password_verify(($_POST['password']), $row['password']))
+            if (password_verify(($_POST['password']), $row['password']))
             {
                 $_SESSION['username'] = $row['username'];
-                $_SESSION['user_id'] = $row['userId'];
+                $_SESSION['userID'] = $row['userID'];
                 header("Location: index.php");
                 exit();
             }

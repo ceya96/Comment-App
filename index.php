@@ -9,11 +9,11 @@ $commentForm = new CommentForm('submitForm', $_SESSION['user_id']);
 $commentList = new CommentList;
 
 //protect the index.php
-if (!isset($_SESSION['username'])) 
+if (!isset($_SESSION['username']))
 {
     header("Location: login.php");
     exit();
-} 
+}
 
 ?>
 <!DOCTYPE html>
@@ -32,15 +32,6 @@ if (!isset($_SESSION['username']))
         </h2>
         <div class="container-form">
             <form id="input" name="myform" method= "POST" action="">
-                <input type="hidden" name="formID" value="MEIN_FORM" />
-                <label for="name"></label>
-                <input type="text" id="name" name="username" required placeholder=" Dein Name">
-                <br>
-                <br>
-                <label for="email"></label>
-                <input type="email" id="email" name="email"  required placeholder="Deine E-Mail">
-                <br>
-                <br>
                 <label for="comment"></label>
                 <textarea id="comment" name="comment" rows="5.5"  placeholder="Deine Nachricht"></textarea>
                 <button class="button" name="submitForm" id="btn" type="submit">
@@ -57,14 +48,14 @@ if (!isset($_SESSION['username']))
                     <ul>
                         <?php foreach ($comments as $comment) { ?>
                             <li>
-                                <?php echo $comment['name']; ?>
+                                <?php echo $comment['username']; ?>
                                 <p><?php echo $comment['text']; ?></p>
                                 <!-- if there is a answer in the answer-key stored, echo it as well -->
                                 <?php if (!empty($comment['answers'])) { ?>
                                     <ul>
                                         <?php foreach ($comment['answers'] as $answer) { ?>
                                             <li>
-                                                <?php echo $answer['name']; ?>
+                                                <?php echo $answer['username']; ?>
                                                 <p><?php echo $answer['text']; ?></p>
                                             </li>
                                         <?php } ?>
