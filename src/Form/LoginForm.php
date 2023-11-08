@@ -32,6 +32,7 @@ class LoginForm
         $result = $stmt->get_result();
 
         //if the username got one result its valid
+        // ToDo: Nested if
         if ($result->num_rows == 1) {
             $row = $result->fetch_assoc();
             if (password_verify(($_POST['password']), $row['password'])) {
