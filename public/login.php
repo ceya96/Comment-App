@@ -37,9 +37,8 @@ $login = new LoginForm("submitLogin");
             </button>
         </form>
         <?php if (isset($_SESSION['loginError'] )): ?>
-        <p class="loginError"><?php echo $_SESSION['loginError']; ?></p>
+        <p class="loginError"><?= $_SESSION['loginError']; ?></p>
         <?php endif; ?>
-
     </div>
     <p class="registrationClick">Noch nicht registriert? Klicke<a href="registration.php"> hier</a></p>
 </div>
