@@ -1,12 +1,17 @@
 <?php
 
+require "../src/Database/Database.php";
+require "../src/Form/Registrationform.php";
+/* require "../src/Entity/User.php"; */
+
 use CommentaryApp\Form\RegistrationForm;
+/* use CommentaryApp\Entity\User; */
 
 require_once("header.php");
 
-require 'Database.php';
+/* require 'Database.php';
 require 'RegistrationForm.php';
-require 'User.php';
+require 'User.php'; */
 
 $regisForm = new RegistrationForm('submitRegis');
 ?>
