@@ -19,14 +19,14 @@ class LoginForm
     private function handleLogin(string $submitName): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["$submitName"])) {
-            $this->login($_POST['username']);
+            $this->login($_POST['userEmail']);
         }
     }
 
-    private function login(string $username): void
+    private function login(string $email): void
     {
-        $stmt = $this->db->connection->prepare("SELECT userID, username, password, email FROM users WHERE username = ?");
-        $stmt->bind_param("s", $username);
+        $stmt = $this->db->connection->prepare("SELECT userID, username, password, email FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
         $stmt->execute();
 
         $result = $stmt->get_result();
@@ -37,6 +37,7 @@ class LoginForm
             if (password_verify(($_POST['password']), $row['password'])) {
                 $_SESSION['username'] = $row['username'];
                 $_SESSION['userID'] = $row['userID'];
+                $_SESSION['userEmail'] = $row['email'];
                 header("Location: index.php");
                 exit();
             } else {

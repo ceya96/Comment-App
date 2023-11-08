@@ -26,8 +26,8 @@ $login = new LoginForm("submitLogin");
     </h2>
     <div class="container-form">
         <form id="input" method= "POST" action="">
-            <label for="name"></label>
-            <input type="text" id="name" name="username" required placeholder="Benutzername">
+            <label for="email"></label>
+            <input type="email" id="email" name="userEmail" required placeholder="E-Mail">
             <label for="password"></label>
             <input type="password" id="password" name="password"  required placeholder="Passwort">
             <input type="checkbox" name="checkbox" onclick="showPassword()">
@@ -41,6 +41,7 @@ $login = new LoginForm("submitLogin");
         <?php endif; ?>
 
     </div>
+    <p class="registrationClick">Noch nicht registriert? Klicke<a href="registration.php"> hier</a></p>
 </div>
 <script>
     function showPassword() {
