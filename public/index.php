@@ -54,21 +54,21 @@ if (!isset($_SESSION['username']))
                     ?>
                     <ul>
                         <?php foreach ($comments as $comment) { ?>
-                            <li>
+                            <li class="commentList">
                                 <p class="username"><?= $comment['username']; ?>:</p>
                                 <p class="comment" ><?= $comment['text']; ?></p>
-                                <button type='button' class='answer-btn' data-id=<?=$comment['id']?> onclick='openAnswer(this)'>Antworten</button>
                                 <!-- if there is a answer in the answer-key stored, echo it as well -->
                                 <?php if (!empty($comment['answers'])) { ?>
                                     <ul>
                                         <?php foreach ($comment['answers'] as $answer) { ?>
                                             <li>
-                                                <p class="username-answer"><?= $answer['username']; ?></p>
+                                                <p class="username-answer"><?= $answer['username']; ?>:</p>
                                                 <p class="answer"><?= $answer['text']; ?></p>
                                             </li>
                                         <?php } ?>
                                     </ul>
                                 <?php } ?>
+                                <button type='button' class='answer-btn' data-id=<?=$comment['id']?> onclick='openAnswer(this)'>Antworten</button>
                             </li>
                         <?php } ?>   
                     </ul> 
