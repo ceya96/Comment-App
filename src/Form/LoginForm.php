@@ -41,11 +41,9 @@ class LoginForm
                 $_SESSION['userEmail'] = $row['email'];
                 header("Location: index.php");
                 exit();
-            } else {
-                $_SESSION['loginError'] = "Benutzername oder Passwort ungültig";
             }
-        } else {
-            $_SESSION['loginError'] = "Benutzername oder Passwort ungültig";
-        }
+        } 
+        $_SESSION['loginError'] = "Benutzername oder Passwort ungültig";
+        
     }
 }
