@@ -37,7 +37,7 @@ class LoginForm
 
         $result = $stmt->get_result();
 
-        //kein Ergebnis oder Passwort falsch
+        //Wenn kein Ergebnis vorhanden ist oder das Passwort ist falsch ist
        if(
           !is_array($row = $result->fetch_assoc()) || 
           !password_verify(($_POST['password']), $row['password'] )
