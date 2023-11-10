@@ -18,7 +18,13 @@ class LoginForm
 
     private function handleLogin(string $submitName): void
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST["$submitName"])) {
+        if (
+            $_SERVER['REQUEST_METHOD'] === 'POST' && 
+            isset($_POST["$submitName"]) &&
+            isset($_POST["password"]) && //ist passwort gesetzt
+            $_POST['password'] !== null //passwort darf nicht null sein 
+         ) 
+         {
             $this->login($_POST['userEmail']);
         }
     }
@@ -31,19 +37,32 @@ class LoginForm
 
         $result = $stmt->get_result();
 
-        //if the username got one result its valid
-        // ToDo: Nested if
-        if ($result->num_rows == 1) {
-            $row = $result->fetch_assoc();
-            if (password_verify(($_POST['password']), $row['password'])) {
-                $_SESSION['username'] = $row['username'];
-                $_SESSION['userID'] = $row['userID'];
-                $_SESSION['userEmail'] = $row['email'];
-                header("Location: index.php");
-                exit();
-            }
-        } 
-        $_SESSION['loginError'] = "Benutzername oder Passwort ungültig";
+        //kein Ergebnis oder Passwort falsch
+       if(
+          !is_array($row = $result->fetch_assoc()) || 
+          !password_verify(($_POST['password']), $row['password'] )
+       ){
+          $this->loginFailed();
+          return;
+       }
         
+       //Login erfolgreich
+       $this->loginSuccessful($row);
+       return;
+    }
+
+    private function loginFailed(): void
+    {
+        $_SESSION['loginError'] = "Benutzername oder Passwort ungültig";
+        return;
+    }
+
+    private function loginSuccessful (array $row)
+    {
+        $_SESSION['username'] = $row['username'];
+        $_SESSION['userID'] = $row['userID'];
+        $_SESSION['userEmail'] = $row['email'];
+
+        return header("Location: index.php");
     }
 }

@@ -67,8 +67,8 @@ class Comment
             $this->db->connection->close();
         } else {
             //insert
-            $sql = $this->db->connection->prepare("INSERT INTO kommentare (userID, username, text, pid) VALUES (?,?,?,?)");
-            $sql->bind_param('issi', $this->userID, $this->username, $this->text, $this->parentId);
+            $sql = $this->db->connection->prepare("INSERT INTO kommentare (userID, text, pid) VALUES (?,?,?)");
+            $sql->bind_param('isi', $this->userID, $this->text, $this->parentId);
             $sql->execute();
 
             $this->db->connection->close();
