@@ -18,11 +18,17 @@ class CommentList
     function getAll(): array
     {
         //Get comments from Database
-        $sql = $this->db->connection->prepare("SELECT userID, username, text, id, pid, tstamp FROM kommentare WHERE pid = 0 ORDER BY tstamp DESC");
+        $sql = $this->db->connection->prepare("SELECT kommentare.id, kommentare.text, kommentare.tstamp, kommentare.pid, kommentare.userid, users.username
+        FROM kommentare
+        LEFT JOIN users ON kommentare.userid = users.userid
+        WHERE pid = 0 ORDER BY tstamp DESC");
         $sql->execute();
         $commentResult = $sql->get_result();
         //Get answers from Database
-        $sql = $this->db->connection->prepare("SELECT userID, username, text, id, pid, tstamp FROM kommentare WHERE pid != 0 ORDER BY tstamp ASC");
+        $sql = $this->db->connection->prepare("SELECT kommentare.id, kommentare.text, kommentare.tstamp, kommentare.pid, kommentare.userid, users.username
+        FROM kommentare
+        LEFT JOIN users ON kommentare.userid = users.userid
+        WHERE pid != 0 ORDER BY tstamp ASC");
         $sql->execute();
         $answerResult = $sql->get_result();
 
