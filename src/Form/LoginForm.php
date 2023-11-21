@@ -21,8 +21,8 @@ class LoginForm
         if (
             $_SERVER['REQUEST_METHOD'] === 'POST' && 
             isset($_POST["$submitName"]) &&
-            isset($_POST["password"]) && //ist passwort gesetzt
-            $_POST['password'] !== null //passwort darf nicht null sein 
+            isset($_POST["password"]) && 
+            $_POST['password'] !== null
          ) 
          {
             $this->login($_POST['userEmail']);

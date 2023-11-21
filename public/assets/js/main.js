@@ -45,15 +45,3 @@ function hideDelete(btn){
     let commentDeleteBtn = document.getElementById("deleteBtn");
     commentDeleteBtn.style.visibility = 'hidden';
 }
-
-let preCodeBtn = document.getElementById('preCodeBtn')
-preCodeBtn.addEventListener('click', showPreCode);
-function showPreCode()
-{
-    let pre = document.getElementById("code");
-    if (pre.style.visibility === "visible") {
-        pre.style.visibility = "hidden";
-    } else {
-        pre.style.visibility = "visible";
-    }
-}
